@@ -218,11 +218,11 @@ if __name__ == '__main__':
         gamma = args.gamma
         weight = args.weight
         
-        optimizer = optim.Adam(model.parameters(), lr=lr) 
         if args.dataset == "broad6k":
+            optimizer = optim.Adam(model.parameters(), lr=lr) 
             scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=1.0)
         else:
-            optimizer = optim.Adam(model.parameters(), lr=lr) 
+            optimizer = optim.Adam(model.parameters(), lr=lr, betas=[0.85, 0.85]) 
             scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.95)
             
         for epoch in range(1, args.epoch + 1):
@@ -270,7 +270,7 @@ if __name__ == '__main__':
                 best_aup_test_each = test_aup
                 torch.save(model.state_dict(), os.path.join(log_file, "auc"+".pth"))
             print("best test auc:", best[2], "best test aup:", best[3])
-                
+            print("best test auc:", test_valid_auc.mean(), "best test aup:", best[3])
             test_auc = np.append(test_auc, test_valid_auc.mean())
             test_aup = np.append(test_aup, test_valid_aup.mean())
             f_log.flush()
@@ -278,8 +278,9 @@ if __name__ == '__main__':
         best_auc_test.append(best[2])
         best_aup_test.append(best[3])
         print("seed:", seed, "\nbest test auc:", best[2], " best test aup:", best[3])
-        f_log.write(f"best test auc:{best[2]}\t best test aup:{best[3]}\n")
         
+        f_log.write(f"best test auc:{best[2]}\t best test aup:{best[3]}\n")
+
         
         writer_auc.writerow(best_auc_test_each)
         writer_aup.writerow(best_aup_test_each)

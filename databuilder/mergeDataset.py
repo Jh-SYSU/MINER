@@ -71,14 +71,11 @@ class mergeDataset(InMemoryDataset):
                 )
             df.to_csv(os.path.join(self.root, "assay_data", "assays.csv"), index=False)
         
-        cs_df = pd.read_csv(
-                os.path.join(self.root, "raw", self.data_file['assay_data']),
-                compression="gzip"
-                )
+        
         
         os.makedirs(os.path.join(self.root, "feature_data"), exist_ok=True)
         if not os.path.exists(os.path.join(self.root, "feature_data", "ge.npz")):
-            
+
             ge_df = pd.read_csv(
                 os.path.join(self.root, "raw", self.data_file['ge']), 
                  compression="gzip")
@@ -87,6 +84,10 @@ class mergeDataset(InMemoryDataset):
             np.savez(os.path.join(self.root, "feature_data", "ge.npz"), features=ge_features)
         
         if not os.path.exists(os.path.join(self.root, "feature_data", "mo.npz")):
+            cs_df = pd.read_csv(
+                os.path.join(self.root, "raw", self.data_file['assay_data']),
+                compression="gzip"
+                )
             mo_df = pd.read_csv(
                 os.path.join(self.root, "raw", self.data_file['mo']), 
                  compression="gzip")
