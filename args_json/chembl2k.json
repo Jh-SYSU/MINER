@@ -1,0 +1,27 @@
+{
+    "batch_size": 1024,
+    "lr": 0.005,
+    "epoch": 150,
+    
+    "dnn_out_dim": 64,
+    "dnn_layer": 5,
+    "de_gene_dnn_emb": 978,
+    "de_cell_dnn_emb": 966, 
+    "gene_dnn_emb":64,
+    "cell_dnn_emb":64,
+    
+    "gnn_type": "gin",
+    "gnn_layer": 3,
+    "gnn_out_dim": 128,
+    "emb_size": 64,
+
+    "unuse_compound": false,
+    "unuse_gene": false,
+    "unuse_cell": false,
+
+    "drop_ratio": 0.5, 
+    "alpha": 0.05,
+    "beta": 0.05,
+    "sigma": 0.05,
+    "gamma": 0.05
+}
